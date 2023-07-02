@@ -128,6 +128,13 @@ class SemanticSegmentationDataset(Dataset):
                 11: [200, 200, 200],  # board
                 12: [50, 50, 50],  # clutter
             }
+        elif self.dataset_name == "partnet-mobility":
+            self.color_map = {
+                0: [0, 255, 0],  # ceiling
+                1: [0, 0, 255],  # floor
+                2: [0, 255, 255],  # wall
+                3: [255, 255, 0],  # beam
+            }
         else:
             assert False, "dataset not known"
 
@@ -635,7 +642,7 @@ class SemanticSegmentationDataset(Dataset):
                 features = np.hstack((features, coordinates))
 
         # if self.task != "semantic_segmentation":
-        if self.data[idx]["raw_filepath"].split("/")[-2] in [
+        if self.dataset_name == "scannet" and self.data[idx]["raw_filepath"].split("/")[-2] in [
             "scene0636_00",
             "scene0154_00",
         ]:
@@ -672,7 +679,8 @@ class SemanticSegmentationDataset(Dataset):
                 coordinates,
                 features,
                 labels,
-                self.data[idx]["raw_filepath"].split("/")[-2],
+                # self.data[idx]["raw_filepath"].split("/")[-2],
+                self.data[idx]["raw_filepath"],
                 raw_color,
                 raw_normals,
                 raw_coordinates,
