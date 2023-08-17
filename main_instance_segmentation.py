@@ -39,9 +39,9 @@ def get_parameters(cfg: DictConfig):
         os.makedirs(cfg.general.save_dir)
     else:
         print("EXPERIMENT ALREADY EXIST")
-        cfg["trainer"][
-            "resume_from_checkpoint"
-        ] = f"{cfg.general.save_dir}/last-epoch.ckpt"
+        # cfg["trainer"][
+        #     "resume_from_checkpoint"
+        # ] = f"{cfg.general.save_dir}/last-epoch.ckpt"
 
     for log in cfg.logging:
         print(log)

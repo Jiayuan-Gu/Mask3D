@@ -122,6 +122,7 @@ class PartNetMobilityPreprocessing(BasePreprocessing):
 
         # dummy normals
         normals = np.zeros_like(xyz_rgb[:, :3])
+        segment_ids = np.ones_like(xyz_rgb[:, 0:1])
 
         # mapping from part id to part name
         labels = np.loadtxt(model_dir / "point_sample" / "label-10000.txt", dtype=int)  # [N]
@@ -138,7 +139,7 @@ class PartNetMobilityPreprocessing(BasePreprocessing):
         inst_labels = np.array(inst_labels)
 
         points = np.hstack(
-            (xyz, rgb, normals, seg_labels[:, None], inst_labels[:, None])
+            (xyz, rgb, normals, segment_ids, seg_labels[:, None], inst_labels[:, None])
         )
         gt_data = points[:, -2] * 1000 + points[:, -1] + 1
 
